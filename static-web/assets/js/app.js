@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function init() {
+$(function () {
   setActiveNav();
   setupSearch();
   setupAddUser();
@@ -6,115 +6,54 @@ document.addEventListener("DOMContentLoaded", function init() {
 });
 
 function setActiveNav() {
-  var current = getCurrentPage();
-  var links = document.querySelectorAll(".nav-link");
-  links.forEach(function (a) {
-    var href = a.getAttribute("href") || "";
-    var end = href.split("/").pop();
-    if (end === current) a.classList.add("active");
+  var current = location.pathname.split("/").pop() || "index.html";
+  $(".nav-link").each(function () {
+    var end = $(this).attr("href").split("/").pop();
+    if (end === current) {
+      $(this).addClass("active");
+    }
   });
-}
-
-function getCurrentPage() {
-  var last = location.pathname.split("/").pop();
-  return last || "index.html";
 }
 
 function setupSearch() {
-  var search = document.getElementById("search");
-  if (!search) return;
-
-  search.addEventListener("keyup", function () {
-    var query = search.value.toLowerCase();
-    filterUsers(query);
-  });
-}
-
-function filterUsers(query) {
-  var tbody = document.getElementById("users-tbody");
-  if (!tbody) return;
-
-  var rows = tbody.querySelectorAll("tr");
-  rows.forEach(function (tr) {
-    var text = tr.innerText.toLowerCase();
-    tr.style.display = text.indexOf(query) > -1 ? "" : "none";
+  if (!$("#search").length) return;
+  $("#search").on("keyup", function () {
+    var query = $(this).val().toLowerCase();
+    $("#users-tbody tr").each(function () {
+      var text = $(this).text().toLowerCase();
+      $(this).toggle(text.indexOf(query) > -1);
+    });
   });
 }
 
 function setupAddUser() {
-  var form = document.getElementById("add-user-form");
-  if (!form) return;
-
-  form.addEventListener("submit", function (e) {
+  if (!$("#add-user-form").length) return;
+  $("#add-user-form").on("submit", function (e) {
     e.preventDefault();
-    var name = (document.getElementById("new-name").value || "").trim();
-    var email = (document.getElementById("new-email").value || "").trim();
-    if (!isValidUser(name, email)) return;
-
+    var name = $("#new-name").val().trim();
+    var email = $("#new-email").val().trim();
+    if (!name || !email) return;
     appendUserRow(name, email);
-    resetAddForm();
+    this.reset();
+    $("#new-name").focus();
   });
 }
 
-function isValidUser(name, email) {
-  return name.length > 0 && email.length > 0;
-}
-
 function appendUserRow(name, email) {
-  var tbody = document.getElementById("users-tbody");
-  if (!tbody) return;
-
-  var tr = document.createElement("tr");
-
-  var tdName = document.createElement("td");
-  tdName.textContent = name;
-
-  var tdEmail = document.createElement("td");
-  tdEmail.textContent = email;
-
-  var tdActions = document.createElement("td");
-  var btnDelete = document.createElement("button");
-  btnDelete.textContent = "Delete";
-  btnDelete.className = "delete-btn";
-  tdActions.appendChild(btnDelete);
-
-  tr.appendChild(tdName);
-  tr.appendChild(tdEmail);
-  tr.appendChild(tdActions);
-
-  tbody.appendChild(tr);
-}
-
-function resetAddForm() {
-  var form = document.getElementById("add-user-form");
-  if (form) {
-    form.reset();
-    var nameInput = document.getElementById("new-name");
-    if (nameInput) nameInput.focus();
-  }
+  var row = `
+    <tr>
+      <td>${$("<div>").text(name).html()}</td>
+      <td>${$("<div>").text(email).html()}</td>
+      <td><button class="delete-btn">Delete</button></td>
+    </tr>`;
+  $("#users-tbody").append(row);
 }
 
 function setupDeleteUser() {
-  var tbody = document.getElementById("users-tbody");
-  if (!tbody) return;
-
-  tbody.addEventListener("click", function (ev) {
-    var target = ev.target;
-    if (!target.classList.contains("delete-btn")) return;
-
-    var row = target.closest("tr");
-    if (!row) return;
-
-    var nameCell = row.querySelector("td:first-child");
-    var name = nameCell ? nameCell.textContent.trim() : "this user";
-
+  $("#users-tbody").on("click", ".delete-btn", function () {
+    var $row = $(this).closest("tr");
+    var name = $row.find("td:first").text().trim();
     var ok = window.confirm('Delete user "' + name + '"?');
-    if (!ok) return;
-
-    row.style.transition = "opacity 120ms ease";
-    row.style.opacity = "0";
-    setTimeout(function () {
-      row.remove();
-    }, 140);
+    if (ok) $row.fadeOut(150, function () { $(this).remove(); });
   });
 }
