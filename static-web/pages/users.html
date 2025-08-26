@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Users | Minimal Example</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Users</h1>
+    <nav>
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="users.html" class="nav-link">Users</a>
+      <a href="about.html" class="nav-link">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <input id="search" type="text" placeholder="Search user..." />
+
+    <form id="add-user-form" style="margin-top:8px;">
+      <input id="new-name" type="text" placeholder="Name" required />
+      <input id="new-email" type="email" placeholder="Email" required />
+      <button type="submit">Add</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr><th>Name</th><th>Email</th><th>Actions</th></tr>
+      </thead>
+      <tbody id="users-tbody">
+        <tr>
+          <td>Lisbeth Hernández</td>
+          <td>lisbeth@example.com</td>
+          <td><button class="delete-btn">Delete</button></td>
+        </tr>
+        <tr>
+          <td>Mariano Camposeco</td>
+          <td>mariano@example.com</td>
+          <td><button class="delete-btn">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+
+  <footer>
+    <small>© 2025 — IPC2</small>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>
