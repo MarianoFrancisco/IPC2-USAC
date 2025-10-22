@@ -7,6 +7,10 @@ import java.util.Map;
 
 import com.mariano.jasper.reports.pojos.config.ReportPaths;
 
+/**
+ *
+ * @author Mariano Camposeco {@literal (mariano1941@outlook.es)}
+ */
 public class ReportParameterFactory {
 
     private ReportParameterFactory() {
