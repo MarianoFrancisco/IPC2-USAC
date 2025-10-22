@@ -1,0 +1,9 @@
+com\mariano\jasper\reports\pojos\service\ReportService.class
+com\mariano\jasper\reports\pojos\config\ReportPaths.class
+com\mariano\jasper\reports\pojos\JasperReportsPojos.class
+com\mariano\jasper\reports\pojos\domain\Employee.class
+com\mariano\jasper\reports\pojos\util\ReportParameterFactory.class
+com\mariano\jasper\reports\pojos\repository\EmployeeRepository.class
+com\mariano\jasper\reports\pojos\repository\InMemoryEmployeeRepository.class
+com\mariano\jasper\reports\pojos\util\ReportLoader.class
+com\mariano\jasper\reports\pojos\domain\EmploymentStatus.class
