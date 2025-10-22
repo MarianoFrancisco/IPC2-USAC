@@ -11,6 +11,10 @@ import com.mariano.jasper.reports.pojos.util.ReportParameterFactory;
 
 import net.sf.jasperreports.engine.JasperReport;
 
+/**
+ *
+ * @author Mariano Camposeco {@literal (mariano1941@outlook.es)}
+ */
 public class JasperReportsPojos {
 
     public static void main(String[] args) {
@@ -23,7 +27,5 @@ public class JasperReportsPojos {
         Map<String, Object> params = ReportParameterFactory.createBaseParameters();
 
         reportService.exportEmployeesToPdf(report, repository.findAll(), ReportPaths.OUT_PDF, params);
-
-        System.out.println("Report generated: " + ReportPaths.OUT_PDF);
     }
 }
